@@ -51,21 +51,18 @@ app.get("/activated", (req, res) => {
 });
 
 app.get("/createtbl", (req, res) => {
-  try {
-    db.schema.createTable("users", (table) => {
-      table.increments("id").primary();
-      table.text("first_name").notNullable();
-      table.text("surname").notNullable();
-      table.string("email").unique().notNullable();
-      table.string("hashed_pw").notNullable();
-      table.integer("entries").defaultTo(0);
-      table.timestamp("joined").notNullable();
-    });
-    res.json("Users table has been successfully created.");
-  } catch (error) {
-    res.json("Failed to create users table in the database.");
-  }
+  db.schema.createTable("users", (table) => {
+    table.increments("id").primary();
+    table.text("first_name").notNullable();
+    table.text("surname").notNullable();
+    table.string("email").unique().notNullable();
+    table.string("hashed_pw").notNullable();
+    table.integer("entries").defaultTo(0);
+    table.timestamp("joined").notNullable();
+  });
+  res.json("Users table has been successfully created.");
 });
+
 app.post("/signin", (req, res) => {
   db("users")
     .where({ email: req.body.email })
