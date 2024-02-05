@@ -7,6 +7,7 @@ const knex = require("knex");
 require("dotenv").config();
 const {
   DATABASE_HOST,
+  INTERNAL_DATABASE_URL,
   DATABASE_USER,
   DATABASE_PASSWORD,
   DATABASE_NAME,
@@ -18,8 +19,10 @@ const {
 const db = knex({
   client: "pg",
   connection: {
-    host: DATABASE_HOST,
-    user: DATABASE_USER,
+    host: INTERNAL_DATABASE_URL,
+    hostname: DATABASE_HOST,
+    port: 5432,
+    username: DATABASE_USER,
     password: DATABASE_PASSWORD,
     database: DATABASE_NAME,
   },
