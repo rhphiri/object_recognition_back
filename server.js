@@ -19,12 +19,12 @@ const {
 const db = knex({
   client: "pg",
   connection: {
-    host: INTERNAL_DATABASE_URL,
     hostname: DATABASE_HOST,
     port: 5432,
+    database: DATABASE_NAME,
     username: DATABASE_USER,
     password: DATABASE_PASSWORD,
-    database: DATABASE_NAME,
+    connectionString: INTERNAL_DATABASE_URL,
   },
 });
 
