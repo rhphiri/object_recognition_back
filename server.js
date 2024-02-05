@@ -54,16 +54,19 @@ app.get("/activated", (req, res) => {
 });
 
 app.get("/createtbl", (req, res) => {
-  db.schema.createTable("users", (table) => {
-    table.increments("id").primary();
-    table.text("first_name").notNullable();
-    table.text("surname").notNullable();
-    table.string("email").unique().notNullable();
-    table.string("hashed_pw").notNullable();
-    table.integer("entries").defaultTo(0);
-    table.timestamp("joined").notNullable();
-  });
-  res.json("Users table has been successfully created.");
+  db.schema
+    .createTable("users", (table) => {
+      table.increments("id").primary();
+      table.text("first_name").notNullable();
+      table.text("surname").notNullable();
+      table.string("email").unique().notNullable();
+      table.string("hashed_pw").notNullable();
+      table.integer("entries").defaultTo(0);
+      table.timestamp("joined").notNullable();
+    })
+    .then((data) => {
+      res.json("This is the response from the database: ", data);
+    });
 });
 
 app.post("/signin", (req, res) => {
