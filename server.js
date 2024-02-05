@@ -33,42 +33,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  db.select(
-    "id",
-    "first_name",
-    "surname",
-    "email",
-    "hashed_pw",
-    "entries",
-    "joined"
-  )
-    .from("users")
-    .then((data) => {
-      res.json(data);
-    });
-});
-
-app.get("/activated", (req, res) => {
-  res.json("The server is working properly.");
-});
-
-app.get("/createtbl", (req, res) => {
-  db.schema
-    .createTable("users", (table) => {
-      table.increments("id").primary();
-      table.text("first_name").notNullable();
-      table.text("surname").notNullable();
-      table.string("email").unique().notNullable();
-      table.string("hashed_pw").notNullable();
-      table.integer("entries").defaultTo(0);
-      table.timestamp("joined").notNullable();
-    })
-    .then((data) => {
-      res.json("This is the response from the database: ", data);
-    });
-});
-
 app.post("/signin", (req, res) => {
   db("users")
     .where({ email: req.body.email })
